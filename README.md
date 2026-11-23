@@ -1,82 +1,52 @@
-# Abhishek & Neha — wedding site
+# Shiva & Nikita — Wedding Site (`#vani`)
 
-A single-page, config-driven wedding website built with Vite, React, Tailwind CSS v4, and Motion. It deploys to GitHub Pages.
+A single-page, config-driven wedding website celebrating Shiva & Nikita on **12 December 2026** in Dehradun, Uttarakhand. Built with Vite, React, Tailwind CSS v4, and Motion, and deployed to GitHub Pages.
 
-[Hosted website](https://chaudharyshiva18.github.io/wedding-invitation/)
+**[Visit the live website](https://chaudharyshiva18.github.io/wedding-invitation/)**
 
-## Edit the site (non-technical)
+## Features
+
+- **Config-driven content** — all text, schedule details, venue links, social handles, and gallery entries live in `src/data/site.config.js`.
+- **Ruby default theme** — ships with five selectable palettes (`ruby`, `marigold`, `emerald`, `sapphire`, `lotus`).
+- **Scroll-reveal animations** — below-the-fold sections glide into view smoothly as guests scroll.
+- **Background music** — attempts playback on load with a first-interaction fallback (tap, click, or keypress) and a floating mute/play control.
+- **Lightweight map embed** — uses a click-to-load Google Maps facade so the page stays fast on mobile networks.
+- **Clean single-page flow** — bottom navigation bar removed for an uncluttered mobile reading experience, with clickable Instagram tags in the footer.
+
+## Edit the site
 
 All guest-facing content lives in **one file**:
 
 [`src/data/site.config.js`](src/data/site.config.js)
 
-Change names, the hashtag, dates, invitation copy, event line-up, venue, photos, music path, footer text, navigation labels, and the default colour theme there. You should not need to edit any React component to launch the site.
+Update names, hashtag (`#vani`), countdown target (`weddingDateIso`), invitation story, event line-up, venue details, photos, music path, Instagram handles, footer text, and `defaultTheme` there.
 
-Keep `navItems[].id` in sync with section ids (`hero`, `invitation`, `countdown`, `lineup`, `venue`, `gallery`).
+Make sure `siteUrl` and `meta` in `site.config.js` point to `https://chaudharyshiva18.github.io/wedding-invitation/` so WhatsApp and Open Graph link previews render properly.
 
-Also update `siteUrl` and `meta` in that file so WhatsApp / Open Graph previews point at your live GitHub Pages URL.
+## Photos & music
 
-## Swap photos
+### Swap photos
 
-1. Add files under `public/photos/` (JPG, PNG, or SVG).
-2. Update `gallery.photos` in `src/data/site.config.js` with `src`, descriptive `alt`, `width`, and `height`.
-3. Keep `src` relative to `public/`, for example `photos/ceremony.jpg`.
+1. Place image files inside `public/photos/` (JPG, JPEG, PNG, or WebP).
+2. Update `gallery.photos` in `src/data/site.config.js` with each file's `src`, descriptive `alt`, `width`, and `height`.
+3. Keep `src` relative to `public/` (for example, `photos/1.jpeg`).
 
-Placeholder SVGs ship so the gallery works before real photographs exist.
+### Background music
 
-Background music: replace `public/music/celebration.wav` or change `music.src` in the config. Music never autoplays; it starts after a tap on the floating control.
+Replace `public/music/celebration.wav` or update `music.src` in `src/data/site.config.js` (a compressed `.mp3` is recommended for faster mobile loading). Because modern mobile browsers block unmuted autoplay before user interaction, `MusicToggle.jsx` attempts autoplay on load and automatically starts playback on the guest's first tap, click, or keypress unless manually paused.
 
-## Enable GitHub Pages
+## Preview themes
 
-1. Push this repository to GitHub.
-2. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. Push to `main`. The workflow in `.github/workflows/deploy.yml` builds and deploys.
+Palettes are defined in `site.themes`, with `defaultTheme` set to `ruby`.
 
-The workflow sets `VITE_BASE_PATH` to `/<repository-name>/`, which is required for **project** sites (`https://<user>.github.io/<repo>/`).
+Preview any theme locally or live by appending a query parameter:
 
-If this is a **user site** (`https://<user>.github.io`), build with `VITE_BASE_PATH=/` instead of deriving the path from the repository name.
+`http://localhost:5173/?theme=marigold`
 
-## The base-path rule
-
-GitHub Pages project sites serve from `/<repo>/`. If Vite’s `base` does not match, every asset 404s and the page can look blank.
-
-`vite.config.js` uses:
-
-```js
-base: process.env.VITE_BASE_PATH || "/"
-```
-
-Verify locally:
-
-```bash
-# PowerShell
-$env:VITE_BASE_PATH="/test/"; npm run build
-```
-
-Then confirm `dist/index.html` references assets under `/test/assets/...`.
+Available theme IDs: `ruby`, `marigold`, `emerald`, `sapphire`, `lotus`.
 
 ## Run locally
 
 ```bash
 npm install
 npm run dev
-```
-
-Open the URL Vite prints (usually `http://localhost:5173`).
-
-## Build
-
-```bash
-npm run build
-npm run preview
-```
-
-## Preview themes
-
-Palettes are listed in `site.themes`. The default is `defaultTheme`.
-
-Append a query parameter:
-
-`http://localhost:5173/?theme=marigold`
-
-Available ids: `marigold`, `ruby`, `emerald`, `sapphire`, `lotus`.
